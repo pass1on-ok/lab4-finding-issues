@@ -21,7 +21,10 @@ def index():
 @app.route('/profile')
 def profile():
     uid = request.args.get('id')
-    return jsonify(users[uid])
+    try:
+        return jsonify(users[uid])
+    except Exception:
+        return jsonify({"error": "User not found or invalid request"}), 404
 
 @app.route('/import_pickle', methods=['POST'])
 def import_pickle():
@@ -44,3 +47,5 @@ def debug_echo():
 
 if __name__ == '__main__':
     app.run(host='127.0.0.1', port=5000, debug=True)
+
+
